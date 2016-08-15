@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@ITA-031-W7:1521:XE"></property>
+		<property name="password" value="bobo"></property>
+		<property name="username" value="bobo"></property>
+	</bean>
+
+	<!-- Jersey Client -->
+	<bean id="clientFactory" class="com.supercell.elma.util.ClientFactory">
+		<property name="maxTotal" value="300"></property>
+		<property name="defaultMaxPerRoute" value="100"></property>
+	</bean>
+	<bean id="jerseyClient" factory-bean="clientFactory"
+		factory-method="getClient">
+	</bean>
+
+
+
+	<!-- JPA实体管理工厂的配置 使用@PersistenceContext会自动注入EntityManager,可以使用 @PersistenceUnit注入entityManagerFactory -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="elmunit"></property>
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+		<property name="packagesToScan" value="com.supercell.elma.entity" /><!--待扫描的实体类包，不再需要persistence.xml了 -->
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 指定实现JPA的适配器，主要作用如下： 1、取代persistence.xml中的<provider> 2、指定方言 3、通知“entityManagerFactory”产生什么样的entityManager 
+		4、还可以使用EclipseLinkJpaVendorAdapter(Toplink)，openJpaVendorAdapter -->
+	<bean id="hibernateJpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
+	</bean>
+
+
+	<!-- Jpa 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- 配置事务的传播特性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="count*" read-only="true" />
+			<tx:method name="search*" read-only="true" />
+			<!-- 其它方法默认为read-only="false" propagation="REQUIRED" isolation="DEFAULT" -->
+			<!-- 不同数据库的isolation不同 -->
+			<!-- 下面这一行是默认配置，必须要加上，否则未指定的方法会被Spring“忽略” -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 配置参与事务的类或方法 -->
+	<aop:config>
+		<aop:pointcut id="allServiceMethod" expression="within(com.supercell.elma.dao.impl.*)" />
+		<aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />
+	</aop:config>
+
+	<!-- 使Spring关注Annotation -->
+	<context:annotation-config />
+
+	<!-- 让Spring通过自动扫描来查询和管理Bean -->
+	<context:component-scan base-package="com.supercell">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+
+
+
+
+
+
+	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="failover://tcp://10.222.232.40:61616" />
+	</bean>
+
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory" ref="targetConnectionFactory" />
+		<property name="maxConnections" value="10" />
+	</bean>
+
+	<!-- Spring用于管理真正的ConnectionFactory的ConnectionFactory -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<!-- 处理评分的消息队列 -->
+	<bean id="ratingQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>merchant-rating</value>
+		</constructor-arg>
+	</bean>
+	<!-- 消息监听器 -->
+	<bean id="merchantRatingListener" class="com.supercell.elma.listener.MerchantRatingListener" />
+	<!-- 消息监听容器 -->
+	<bean id="ratingjmsContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="ratingQueue" />
+		<property name="messageListener" ref="merchantRatingListener" />
+	</bean>
+
+
+
+	<!-- 处理投诉请求的JMS消息队列 -->
+	<bean id="complaintQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>customer-complaint</value>
+		</constructor-arg>
+	</bean>
+	<!-- 消息监听器 -->
+	<bean id="complaintListener" class="com.supercell.elma.listener.ComplaintListener" />
+	<!-- 消息监听容器 -->
+	<bean id="complaintjmsContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="complaintQueue" />
+		<property name="messageListener" ref="complaintListener" />
+	</bean>
+	<!-- 处理商家状态的消息队列 -->
+	<bean id="merchantStateQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>merchant-state</value>
+		</constructor-arg>
+	</bean>
+	<!-- 消息监听器 -->
+	<bean id="merchantStateListener" class="com.supercell.elma.listener.MerchantStateListener" />
+	<!-- 消息监听容器 -->
+	<bean id="merchantStatejmsContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="merchantStateQueue" />
+		<property name="messageListener" ref="merchantStateListener" />
+	</bean>
+	<!-- 处理菜品推荐的消息队列 -->
+	<bean id="recommendDishQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>recommend-dish</value>
+		</constructor-arg>
+	</bean>
+	<!-- 消息监听器 -->
+	<bean id="recommendDishListener" class="com.supercell.elma.listener.RecommendDishListener" />
+	<!-- 消息监听容器 -->
+	<bean id="recommendDishjmsContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="recommendDishQueue" />
+		<property name="messageListener" ref="recommendDishListener" />
+	</bean>
+
+
+</beans>

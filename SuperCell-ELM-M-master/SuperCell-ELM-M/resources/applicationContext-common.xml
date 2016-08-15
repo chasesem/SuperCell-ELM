@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 使用Oracle做为数据库 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="oracle.jdbc.OracleDriver"/>
+        <property name="jdbcUrl" value="jdbc:oracle:thin:@//10.222.232.36:1521/XE"/>
+        <!--指定连接数据库的用户名-->
+        <property name="user" value="Joe"/>
+        <!--指定连接数据库的密码-->
+        <property name="password" value="joe"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="minPoolSize" value="1"/>
+        <!-- 设置初始连接池的大小 -->
+        <property name="initialPoolSize" value="5"/>
+        <!-- 超时时间设置为10分钟 -->
+        <property name="maxIdleTime" value="600"/>
+    </bean>
+
+    <!-- 配置SessionFactory,由Spring容器来管理Hibernate -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <!-- 注入dataSource -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置自动扫描包下的实体，也可使用annotatedClasses属性进行单个实体配置-->
+        <property name="packagesToScan" value="com.supercell.entity"/>
+        <!-- 配置Hibernate属性 -->
+        <property name="hibernateProperties">
+            <props>
+                <!-- Enable EhCache -->
+                <prop key="hibernate.cache.region.factory_class">
+                    org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+                </prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <!-- Oracle database -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!-- TODO 以下的语句用于调试，正式演示时请删除 -->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- 配置事务的传播特性 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
+            <!-- 其它方法默认为read-only="false" propagation="REQUIRED" isolation="DEFAULT" -->
+            <!-- 不同数据库的isolation不同 -->
+            <!-- 下面这一行是默认配置，必须要加上，否则未指定的方法会被Spring“忽略” -->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置参与事务的类或方法 -->
+    <aop:config>
+        <aop:pointcut id="allServiceMethod" expression="within(com.supercell.elmm.dao.impl.*)"/>
+        <aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice"/>
+    </aop:config>
+
+    <!-- 使Spring关注Annotation -->
+    <context:annotation-config/>
+
+    <!-- 让Spring通过自动扫描来查询和管理Bean -->
+    <context:component-scan base-package="com.supercell">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+</beans>

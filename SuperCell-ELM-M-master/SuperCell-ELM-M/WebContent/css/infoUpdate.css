@@ -1,0 +1,222 @@
+body{
+	    padding: 0;
+	    margin: 0;
+	    background-color:#F5F5F5;
+	    }
+	    a{
+	        text-decoration: none;
+	    }
+	    a:visited{
+	    	color: #000;
+	    }
+	    header{
+	        background-color: #64cdff;
+	        width: 100%;
+	        height: 50px;
+	        position: relative;
+	        transition: .6s;
+	    }
+	    header:hover{
+	        background: #00adff;
+	        transition: .6s;
+	    }
+	    nav{
+	        position: absolute;
+	        bottom: 10px;
+	        right: 12%;
+	    }
+	    nav>ul>li{
+	        list-style: none;
+	        float: left;
+	        font-size: 20px;
+	        color: #FFF;
+	        padding-left: 20px;
+	    }
+	    nav>ul>li>a{
+	        text-decoration: none;
+	        color: #454d67;
+	        font-size: 20px;
+	        transition: .3s;
+	    }
+	    nav>ul>li>a:hover{
+	        color:#ffffff;
+	        transition: .5s;
+	    }
+	    .clear{
+	        clear: both;
+	    }
+	    section{
+	        width: 960px;
+	        margin: 0 auto;
+	    }
+	    .head{
+            background: #FFF;
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #AAA;
+            color: #fa9700;
+            padding-left: 20px;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+        .head>a{
+			margin-right: 30px;
+			float: right;
+			display: block;
+			width: 100px;
+			height: 30px;
+			line-height: 30px;
+			margin-top: 10px;
+			background: #00adff;
+			color: #FFF;
+			text-align: center;
+        }
+        .hhead{
+        	background: #FFF;
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #AAA;
+            color: #fa9700;
+            padding-left: 20px;
+            font-weight: 600;
+        }
+        .uinfo{
+        	background: #FFF;
+        	padding: 15px 0;
+        	padding-left: 300px;
+        	font-size: 15px;
+        	border-bottom: 1px dotted #c3c3c3;
+        }
+        .uinfo>label:nth-child(1){
+        	font-size: 18px;
+        	font-weight: 600;
+        	color: #666;
+        }
+        .uinfo>a{
+			padding-left: 40px;
+			text-decoration: underline;
+			transition: .5s;
+        }
+        .uinfo>a:hover{
+        	color: #ff0087;
+        	transition: .3s;
+        }
+        .uinfo>img{
+        	width: 200px;
+        	height: 120px;
+        }
+        .htable{
+        	display: table;
+        	margin: 0 auto;
+        }
+        .htr{
+        	display: table-row;
+        	margin: 0 auto;
+
+        }
+        .htr>label{
+        	display: table-cell;
+        	width: 150px;
+        	padding: 20px 0;
+        	text-align: center;
+        }
+        .htr>input{
+        	width: 200px;
+        }
+        .htr>label{
+
+        }
+        .herror{
+        	text-align: center;
+        	color: #E00;
+        	font-size: 17px;
+        }
+        .hbtn{
+        	padding: 10px 0;
+        	text-align: center;
+        }
+        .hbtn>input{
+			width: 120px;
+			height: 30px;
+			color: #FFF;
+			background: #f74342;
+			border: none;
+			font-size: 16px;
+        }
+        .cpwd{
+			width: 600px;
+			margin: 0px auto;
+			background: #FFF;
+			position: fixed;
+			top: 30%;
+			right: 35%;
+        }
+        .cads{
+			width: 600px;
+			margin: 0px auto;
+			background: #FFF;
+			position: fixed;
+			top: 30%;
+			right: 35%;
+        }
+        .hxbtn{
+    	    width: 20px;
+		    height: 20px;
+		    border-radius: 50%;
+		    border: 1px solid #EEE;
+		    background: #64cdff;
+		    float: right;
+		    margin-top: 15px;
+		    margin-right: 50px;
+		    position: relative;
+        }
+        .hxbtn:before{
+			content: '';
+			display: block;
+			width: 3px;
+			height: 15px;
+			background: #000;
+			position: absolute;
+			left: 8px;
+			top: 2px;
+			transform: rotate(45deg);
+        }
+        .hxbtn:after{
+			content: '';
+			display: block;
+			width: 3px;
+			height: 15px;
+			background: #000;
+			position: absolute;
+			left: 8px;
+			top: 2px;
+			transform: rotate(-45deg);
+        }
+        .cover{
+        	position: fixed;
+        	width: 100%;
+        	height: 100%;
+        	background: rgba(0, 0, 0, 0.5);
+        }
+        .uplogo{
+        	display: inline-block;
+        	width: 200px;
+        }
+        .uplogo>img{
+        	width: 200px;
+        	height: 120px;
+        }
+        .subtn{
+        	background: #FFF;
+        	padding: 10px 0;
+        	text-align: center;
+        }
+        .subtn>input{
+        	border: none;
+        	width: 120px;
+        	height: 30px;
+        	background: #E00;
+        	color: #fff;
+        	font-size: 15px;
+        	font-weight: 600;
+        }

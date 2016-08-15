@@ -1,0 +1,203 @@
+body{
+	padding: 0;
+	margin: 0;
+	background-color:#F5F5F5;
+}
+a{
+    text-decoration: none;
+}
+header{
+    background-color: #64cdff;
+    width: 100%;
+    height: 50px;
+    position: relative;
+    transition: .6s;
+}
+header:hover{
+    background: #00adff;
+    transition: .6s;
+}
+nav{
+    position: absolute;
+    bottom: 10px;
+    right: 12%;
+}
+
+nav>ul>li{
+    list-style: none;
+    float: left;
+    font-size: 20px;
+    color: #FFF;
+    padding-left: 20px;
+}
+nav>ul>li>a{
+    text-decoration: none;
+    color: #454d67;
+    font-size: 20px;
+    transition: .3s;
+}
+nav>ul>li>a:hover{
+    color:#ffffff;
+    transition: .5s;
+}
+.clear{
+    clear: both;
+}
+section{
+    width: 960px;
+    margin: 0 auto;
+}
+.head{
+    background: #FFF;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #AAA;
+    color: #fa9700;
+    margin-top: 30px;
+    font-weight: 600;
+}
+.head>a{
+	margin-left: 165px;
+	color: #000;
+}
+.head>.active{
+	color: #fa9700;
+}
+.mtable{
+	display: table;
+	width: 100%;
+	text-align: center;
+	background: #FFF;
+}
+.mtheader{
+	display: table-header-group;
+	background: #e3e3e3;
+	font-size: 16px;
+	font-weight: 600;
+	color: #5b5b5b;
+}
+.mtheader>div{
+	display: table-cell;
+	padding: 10px 0;
+}
+.mtr{
+	display: table-row;
+}
+.mtr:hover{
+	background: #fbfbfb;
+}
+.mtd{
+	display: table-cell;
+	vertical-align: middle;
+	border-bottom: 1px dashed #DDD;
+	color: #333;
+	padding: 20px 0;
+}
+.mtd>img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.mtd>a{
+	display: block;
+	width: 100px;
+	height: 25px;
+	line-height: 25px;
+	margin: 0 auto;
+	border: 1px solid #EEE;
+	color: #333;
+	transition: .5s
+}
+.mtd>a:hover{
+	color: #00adff;
+	border: 1px solid #00adff;
+	transition: .3s
+}
+.mtd>a:nth-child(2){
+	margin-top: 10px;
+	transition: .5s
+}
+.mtd>a:nth-child(2):hover{
+	transition: .3s;
+	color: #19e14d;
+	border: 1px solid #19e14d;
+}
+ .mtd>a:nth-child(3){
+	margin-top: 10px;
+	transition: .5s
+}
+.mtd>a:nth-child(3):hover{
+	transition: .3s;
+	color: #E00;
+	border: 1px solid #E00;
+}
+.cover{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+}
+.complain{
+	width: 300px;
+	background: #FFF;
+	margin: 0 auto;
+	text-align: center;
+	position: fixed;
+	top: 30%;
+	left: 40%;
+
+}
+.complain>.head{
+	color: #E00;
+	margin: 0;
+}
+.complain>div:nth-child(2){
+	color: #64cdff;
+	font-size: 20px;
+	padding: 4px 0 10px 0;
+}
+.combtn{
+	background: #FFF;
+}
+.combtn>input{
+	background: #E00;
+	color: #FFF;
+	border: none;
+	width: 100px;
+	height: 30px;
+	margin: 20px auto;
+}
+.hxbtn{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #EEE;
+    background: #64cdff;
+    float: right;
+    margin-top: 15px;
+    margin-right: 50px;
+    display: block;
+    position: relative;
+}
+.hxbtn:before{
+	content: '';
+	display: block;
+	width: 3px;
+	height: 15px;
+	background: #000;
+	position: absolute;
+	left: 8px;
+	top: 2px;
+	transform: rotate(45deg);
+}
+.hxbtn:after{
+	content: '';
+	display: block;
+	width: 3px;
+	height: 15px;
+	background: #000;
+	position: absolute;
+	left: 8px;
+	top: 2px;
+	transform: rotate(-45deg);
+}

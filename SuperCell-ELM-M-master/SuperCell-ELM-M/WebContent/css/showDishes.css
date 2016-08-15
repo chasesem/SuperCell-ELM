@@ -1,0 +1,316 @@
+@CHARSET "UTF-8";
+
+body {
+	padding: 0;
+	margin: 0;
+	background-color: #F5F5F5;
+}
+
+a {
+	text-decoration: none;
+}
+
+header {
+	background-color: #64cdff;
+	width: 100%;
+	height: 50px;
+	position: relative;
+	transition: .6s;
+}
+
+header:hover {
+	background: #00adff;
+	transition: .6s;
+}
+
+nav {
+	position: absolute;
+	bottom: 10px;
+	right: 12%;
+}
+
+nav>ul>li {
+	list-style: none;
+	float: left;
+	font-size: 20px;
+	color: #FFF;
+	padding-left: 20px;
+}
+
+nav>ul>li>a {
+	text-decoration: none;
+	color: #454d67;
+	font-size: 20px;
+	transition: .3s;
+}
+
+nav>ul>li>a:hover {
+	color: #ffffff;
+	transition: .5s;
+}
+
+.clear {
+	clear: both;
+}
+
+section {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.head {
+	background: #FFF;
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 1px solid #AAA;
+	color: #fa9700;
+	margin-top: 30px;
+	font-weight: 600;
+	padding-left: 20px;
+}
+
+.head>input {
+	float: right;
+	border: none;
+	background: #00adff;
+	color: #FFF;
+	width: 90px;
+	height: 30px;
+	font-size: 14px;
+	margin-top: 10px;
+	margin-right: 20px;
+}
+
+.clear {
+	clear: both;
+}
+
+.dishes {
+	overflow: hidden;
+    position: relative;
+}
+
+.dish {
+	float: left;
+	width: 238px;
+	height: 270px;
+	border-right: 1px dashed #DDD;
+	border-bottom: 1px dashed #DDD;
+	padding-right: 1px;
+	overflow: hidden;
+	transition: .3s;
+	background: #FFF;
+	position: relative;
+	color: #313131;
+}
+
+.dish:nth-child(4n+0) {
+	border-right: none;
+}
+
+.dish:hover {
+	background: #F5F5F5;
+	transition: .5s;
+}
+
+.dish>img {
+	width: 210px;
+	height: 158px;
+	margin: 0 auto;
+	display: block;
+	padding-top: 20px;
+}
+
+.dprice {
+	position: absolute;
+	bottom: 15px;
+	left: 5px;
+	color: #fe4d3d;
+}
+
+.dname {
+	display: inline-block;
+	text-align: center;
+	height: 16px;
+	width: 200px;
+	padding-left: 5px;
+	font-size: 14px;
+	padding-top: 10px;
+	color: #313131;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.options {
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+}
+
+.options>input {
+	width: 30px;
+	height: 30px;
+	border: none;
+	font-size: 14px;
+	font-weight: 600;
+	text-align: center;
+	background: #FFF;
+	border-radius: 3px;
+	transition: .3s;
+}
+
+.options>input:nth-child(1) {
+	border: 1px solid #25ba00;
+	color: #25ba00;
+}
+
+.options>input:nth-child(1):hover {
+	border: none;
+	background: #25ba00;
+	color: #FFF;
+	transition: .3s;
+}
+
+.options>input:nth-child(2) {
+	border: 1px solid #00adff;
+	color: #00adff;
+}
+
+.options>input:nth-child(2):hover {
+	border: none;
+	background: #00adff;
+	color: #FFF;
+	transition: .3s;
+}
+
+.options>input:nth-child(3) {
+	border: 1px solid #fe4d3d;
+	color: #fe4d3d;
+}
+
+.options>input:nth-child(3):hover {
+	border: none;
+	background: #fe4d3d;
+	color: #FFF;
+	transition: .3s;
+}
+
+.dmange {
+	width: 500px;
+	position: fixed;
+	top: 30%;
+	left: 37%;
+	z-index: 1000;
+}
+
+.dmbody {
+	background: #fff;
+	width: 100%;
+}
+
+.dmbody>table {
+	width: 480px;
+	margin: 0 auto;
+}
+
+.dmbody>table>tr {
+	padding: 10px 0;
+}
+
+.addimg {
+	width: 100px;
+	height: 75px;
+}
+
+.osbtn {
+	background: #fff;
+	text-align: center;
+	padding: 10px 0;
+}
+
+.osbtn>input {
+	background: #fe4d3d;
+	border: none;
+	color: #FFF;
+	width: 100px;
+	height: 30px;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.cover {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 500;
+}
+
+#picv {
+	width: 100px;
+	display: block;
+}
+
+#picu {
+	width: 100px;
+	display: block;
+}
+
+.hxbtn {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 1px solid #EEE;
+	background: #64cdff;
+	float: right;
+	margin-top: 15px;
+	margin-right: 50px;
+	position: relative;
+}
+
+.hxbtn:before {
+	content: '';
+	display: block;
+	width: 3px;
+	height: 15px;
+	background: #000;
+	position: absolute;
+	left: 8px;
+	top: 2px;
+	transform: rotate(45deg);
+}
+
+.hxbtn:after {
+	content: '';
+	display: block;
+	width: 3px;
+	height: 15px;
+	background: #000;
+	position: absolute;
+	left: 8px;
+	top: 2px;
+	transform: rotate(-45deg);
+}
+.rmd{
+    position: absolute;
+    top: 25px;
+	left: 3px;
+    z-index: 400;
+    transform: rotate(-30deg);
+}
+.rmd>label{
+    width: 80px;
+    height: 30px;
+    background: #E00;
+    color: #FFF;
+ 	padding: 5px;
+ 	border-radius: 4px;
+ 	font-weight: 900;
+}
+.comfirmbody{
+    background: #FFF;
+    text-align: center;
+    font-size: 18px;
+    color: #E00;
+}

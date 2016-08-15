@@ -1,0 +1,131 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color:#F5F5F5;
+}
+a{
+    text-decoration: none;
+}
+header{
+    background-color: #64cdff;
+    width: 100%;
+    height: 50px;
+    position: relative;
+    transition: .6s;
+}
+header:hover{
+    background: #00adff;
+    transition: .6s;
+}
+nav{
+    position: absolute;
+    bottom: 10px;
+    right: 12%;
+}
+nav>ul>li{
+    list-style: none;
+    float: left;
+    font-size: 20px;
+    color: #FFF;
+    padding-left: 20px;
+}
+nav>ul>li>a{
+    text-decoration: none;
+    color: #454d67;
+    font-size: 20px;
+    transition: .3s;
+}
+nav>ul>li>a:hover{
+    color:#ffffff;
+    transition: .5s;
+}
+.clear{
+    clear: both;
+}
+section{
+    width: 960px;
+    margin: 0 auto;
+}
+.head{
+    background: #FFF;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #AAA;
+    color: #fa9700;
+    padding-left: 20px;
+    margin-top: 30px;
+    font-weight: 600;
+}
+.head>span{
+    color: #000;
+}
+.dsinfo{
+    display: table;
+    width: 100%;
+    background: #FFF;
+}
+.dhead{
+    text-align: center;
+    padding-top:20px;
+    padding-bottom: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8a8a8a;
+    border-bottom: 1px solid #AAA;
+    width: 930px;
+    margin: 0 auto;
+}
+.dcell{
+    display: table-cell;
+    width: 300px;
+}
+.dinfo{
+    text-align: center;
+    font-size: 16px;
+    width: 930px;
+    margin: 0 auto;
+    border-bottom: 1px dotted #c3c3c3;
+    color: #666;
+}
+.dicell{
+    display: table-cell;
+    width: 300px;
+    padding: 10px 0;
+}
+.dicell:nth-child(3n+1){
+    font-weight: 600;
+}
+.total{
+    text-align: right;
+    padding:10px 60px 20px 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+.total>span{
+    font-size: 40px;
+    color: #f74342;
+}
+.uinfo{
+}
+.uinfo>div{
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px dashed #e5e5e5;
+    background: #FFF;
+    padding-left: 50px;
+}
+.combtn{
+    background: #FFF;
+    padding: 20px 0;
+}
+.combtn>a{
+    display: block;
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto;
+    text-align: center;
+    color: #FFF;
+    font-weight: 600;
+    background: #f74342;
+}

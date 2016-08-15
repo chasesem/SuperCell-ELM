@@ -1,0 +1,22 @@
+<states>
+	<state>
+		<action>1</action>
+		<description>账号正常</description>
+		<url>login</url>
+	</state>
+	<state>
+		<action>2</action>
+		<description>sorry,账号还在审核中，暂时无法登录！</description>
+		<url>notLogin</url>
+	</state>
+	<state>
+		<action>3</action>
+		<description>sorry，账号审核不通过，无法登录!</description>
+		<url>notLogin</url>
+	</state>
+	<state>
+		<action>4</action>
+		<description>sorry，该账号已被拉入黑名单，无法登录!</description>
+		<url>notLogin</url>
+	</state>
+</states>
